@@ -658,7 +658,7 @@ public class GriefPrevention extends JavaPlugin
         }
         
         //default for claim creation/modification tool
-        String modificationToolMaterialName = Material.GOLDEN_SHOVEL.name();
+        String modificationToolMaterialName = Material.GOLD_SPADE.name();
         
         //get modification tool from config
         modificationToolMaterialName = config.getString("GriefPrevention.Claims.ModificationTool", modificationToolMaterialName);
@@ -668,7 +668,7 @@ public class GriefPrevention extends JavaPlugin
         if(this.config_claims_modificationTool == null)
         {
             GriefPrevention.AddLogEntry("ERROR: Material " + modificationToolMaterialName + " not found.  Defaulting to the golden shovel.  Please update your config.yml.");
-            this.config_claims_modificationTool = Material.GOLDEN_SHOVEL;
+            this.config_claims_modificationTool = Material.GOLD_SPADE;
         }
         
         //default for siege worlds list
@@ -700,37 +700,14 @@ public class GriefPrevention extends JavaPlugin
         //default siege blocks
         this.config_siege_blocks = new ArrayList<Material>();
         this.config_siege_blocks.add(Material.DIRT);
-        this.config_siege_blocks.add(Material.GRASS_BLOCK);
         this.config_siege_blocks.add(Material.GRASS);
-        this.config_siege_blocks.add(Material.FERN);
+        this.config_siege_blocks.add(Material.GRASS);
         this.config_siege_blocks.add(Material.DEAD_BUSH);
         this.config_siege_blocks.add(Material.COBBLESTONE);
         this.config_siege_blocks.add(Material.GRAVEL);
         this.config_siege_blocks.add(Material.SAND);
         this.config_siege_blocks.add(Material.GLASS);
-        this.config_siege_blocks.add(Material.GLASS_PANE);
-        this.config_siege_blocks.add(Material.OAK_PLANKS);
-        this.config_siege_blocks.add(Material.SPRUCE_PLANKS);
-        this.config_siege_blocks.add(Material.BIRCH_PLANKS);
-        this.config_siege_blocks.add(Material.JUNGLE_PLANKS);
-        this.config_siege_blocks.add(Material.ACACIA_PLANKS);
-        this.config_siege_blocks.add(Material.DARK_OAK_PLANKS);
-        this.config_siege_blocks.add(Material.WHITE_WOOL);
-        this.config_siege_blocks.add(Material.ORANGE_WOOL);
-        this.config_siege_blocks.add(Material.MAGENTA_WOOL);
-        this.config_siege_blocks.add(Material.LIGHT_BLUE_WOOL);
-        this.config_siege_blocks.add(Material.YELLOW_WOOL);
-        this.config_siege_blocks.add(Material.LIME_WOOL);
-        this.config_siege_blocks.add(Material.PINK_WOOL);
-        this.config_siege_blocks.add(Material.GRAY_WOOL);
-        this.config_siege_blocks.add(Material.LIGHT_GRAY_WOOL);
-        this.config_siege_blocks.add(Material.CYAN_WOOL);
-        this.config_siege_blocks.add(Material.PURPLE_WOOL);
-        this.config_siege_blocks.add(Material.BLUE_WOOL);
-        this.config_siege_blocks.add(Material.BROWN_WOOL);
-        this.config_siege_blocks.add(Material.GREEN_WOOL);
-        this.config_siege_blocks.add(Material.RED_WOOL);
-        this.config_siege_blocks.add(Material.BLACK_WOOL);
+        this.config_siege_blocks.add(Material.STAINED_GLASS_PANE);
         this.config_siege_blocks.add(Material.SNOW);
         
         //build a default config entry
@@ -3515,7 +3492,7 @@ public class GriefPrevention extends JavaPlugin
 				for(int y = 0; y < snapshots[0].length; y++)
 				{
 					Block block = chunk.getWorld().getBlockAt(startLocation.getBlockX() + x, startLocation.getBlockY() + y, startLocation.getBlockZ() + z);
-					snapshots[x][y][z] = new BlockSnapshot(block.getLocation(), block.getType(), block.getBlockData());
+					snapshots[x][y][z] = new BlockSnapshot(block.getLocation(), block.getType());
 				}
 			}
 		}
@@ -3632,21 +3609,6 @@ public class GriefPrevention extends JavaPlugin
         Boolean configSetting = this.config_pvp_specifiedWorlds.get(world);
         if(configSetting != null) return configSetting;
         return world.getPVP();
-    }
-
-    public static boolean isNewToServer(Player player)
-    {
-        if(     player.getStatistic(Statistic.PICKUP, Material.OAK_LOG) > 0 ||
-                player.getStatistic(Statistic.PICKUP, Material.SPRUCE_LOG) > 0 ||
-                player.getStatistic(Statistic.PICKUP, Material.BIRCH_LOG) > 0 ||
-                player.getStatistic(Statistic.PICKUP, Material.JUNGLE_LOG) > 0 ||
-                player.getStatistic(Statistic.PICKUP, Material.ACACIA_LOG) > 0 ||
-                player.getStatistic(Statistic.PICKUP, Material.DARK_OAK_LOG) > 0) return false;
-        
-        PlayerData playerData = instance.dataStore.getPlayerData(player.getUniqueId());
-        if(playerData.getClaims().size() > 0) return false;
-        
-        return true;
     }
 
     static void banPlayer(Player player, String reason, String source)

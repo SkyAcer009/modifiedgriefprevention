@@ -345,10 +345,10 @@ public class Claim
 	        Material.PUMPKIN_STEM,
 	        Material.WHEAT,
 	        Material.MELON_STEM,
-	        Material.CARROTS,
-	        Material.POTATOES,
-	        Material.NETHER_WART,
-	        Material.BEETROOTS);
+	        Material.CARROT,
+	        Material.POTATO,
+	        Material.NETHER_WARTS,
+	        Material.BEETROOT);
 	    
     private boolean placeableForFarming(Material material)
     {

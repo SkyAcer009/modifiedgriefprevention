@@ -123,13 +123,6 @@ public class EntityEventHandler implements Listener
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-	public void onLightningStrike(LightningStrikeEvent event){
-		if(event.getCause() == LightningStrikeEvent.Cause.TRIDENT){
-			event.getLightning().setMetadata("GP_TRIDENT", new FixedMetadataValue(GriefPrevention.instance, event.getLightning().getLocation()));
-		}
-	}
-
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
 	public void onEntityChangeBLock(EntityChangeBlockEvent event)
 	{
 		if(!GriefPrevention.instance.config_endermenMoveBlocks && event.getEntityType() == EntityType.ENDERMAN)
@@ -155,7 +148,7 @@ public class EntityEventHandler implements Listener
 		}
 	    
 		//don't allow crops to be trampled, except by a player with build permission
-		else if(event.getTo() == Material.DIRT && event.getBlock().getType() == Material.FARMLAND)
+		else if(event.getTo() == Material.DIRT && event.getBlock().getType() == Material.SOIL)
 		{
 			if(event.getEntityType() != EntityType.PLAYER)
 			{
@@ -265,7 +258,7 @@ public class EntityEventHandler implements Listener
 	public void onEntityInteract(EntityInteractEvent event)
 	{
 		Material material = event.getBlock().getType();
-		if(material == Material.FARMLAND)
+		if(material == Material.SOIL)
 		{
 			if(!GriefPrevention.instance.config_creaturesTrampleCrops)
 			{
@@ -1071,10 +1064,7 @@ public class EntityEventHandler implements Listener
                         if(noContainersReason != null)
                         {
                             event.setCancelled(true);
-                            
-                            //kill the arrow to avoid infinite bounce between crowded together animals //RoboMWM: except for tridents
-                            if(arrow != null && arrow.getType() != EntityType.TRIDENT) arrow.remove();
-                            
+
                             if(sendErrorMessagesToPlayers)
                             {
                                 String message = GriefPrevention.instance.dataStore.getMessage(Messages.NoDamageClaimedEntity, claim.getOwnerName());
